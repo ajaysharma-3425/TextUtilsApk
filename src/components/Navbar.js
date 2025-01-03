@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar(props) {
   return (
@@ -8,9 +8,9 @@ export default function Navbar(props) {
         className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
       >
         <div className="container-fluid">
-          <Link className="navbar-brand fw-bold text-uppercase" to="/">
+          <NavLink className="navbar-brand fw-bold text-uppercase" to="/">
             {props.title}
-          </Link>
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
@@ -23,19 +23,19 @@ export default function Navbar(props) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav  mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <NavLink className="nav-link " aria-current="page" to="/">
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">
+                <NavLink className="nav-link" to="/about">
                   About Us
-                </Link>
+                </NavLink>
               </li>
             </ul>
-            <div className="d-flex align-items-center ms-3">
+            <div className="d-flex align-items-center ms-auto">
               <label
                 className="form-check-label px-3"
                 style={{ cursor: "pointer" }}
