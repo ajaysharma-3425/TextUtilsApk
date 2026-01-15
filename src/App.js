@@ -10,6 +10,8 @@ import {
   Routes
 } from "react-router-dom";
 import toast from 'react-hot-toast';
+import Services from './components/Services';
+import Contact from './components/Contact';
 
 function App() {
   const [mode,setMode]=useState("light");
@@ -59,11 +61,15 @@ function App() {
     <Router>
     <Navbar title="TextUtils" mode={mode} EnableDarkMode={toggleMode}/>
     <Alert alert={alert}/>
-    <div className='container my-3'>
+    <div className='container my-3 '>
     <Routes>
           <Route exact path="/about" element={<About mode={mode}/>}>
           </Route>
           <Route exact path="/" element={<Textform showAlert={showAlert} heading="Try TextUtils  WordCounter | CharacterCounter | RemoveExtraSpaces." mode={mode}/>}> 
+          </Route>
+          <Route exact path="/services" element={<Services mode={mode}/>}> 
+          </Route>
+          <Route exact path="/contact" element={<Contact mode={mode}/>}> 
           </Route>
     </Routes>
     </div>
