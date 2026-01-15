@@ -14,23 +14,37 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 
 function App() {
-  const [mode,setMode]=useState("light");
-  const [alert,setAlert] = useState(null);
-  const showAlert=(message,type)=>{
+  const [mode, setMode] = useState("light");
+  const [alert, setAlert] = useState(null);
+  const showAlert = (message, type) => {
     setAlert({
-      message : message,
-      type : type
+      message: message,
+      type: type,
+      title: type.charAt(0).toUpperCase() + type.slice(1)
     })
     setTimeout(() => {
       setAlert(" ")
-    }, 1500);
+    }, 2000);
   }
-  const toggleMode=()=>{
-    if (mode==="light") {
+
+  const handleSubmit = () => {
+    try {
+      // your logic
+      showAlert('success', 'Form submitted successfully!');
+    } catch (error) {
+      showAlert('danger', error.message || 'An error occurred');
+    }
+  };
+
+  const handleAlertClose = () => {
+    setAlert(null);
+  };
+  const toggleMode = () => {
+    if (mode === "light") {
       setMode("dark");
-      document.body.style.backgroundColor="#100c2d";
-      showAlert("Dark Mode Enabled !","success");
-      document.title="TextUtils - DarkMode  Enabled";
+      document.body.style.backgroundColor = "#100c2d";
+      showAlert("Dark Mode Enabled !", "success");
+      document.title = "TextUtils - DarkMode  Enabled";
       toast.success('Dark Mode Enabled', {
         position: "bottom-center"
       })
@@ -42,9 +56,9 @@ function App() {
       // }, 5000);
     } else {
       setMode("light");
-      document.body.style.backgroundColor="white";
-      showAlert("Light Mode Enabled !","success");
-      document.title="TextUtils - LightMode  Enabled";
+      document.body.style.backgroundColor = "white";
+      showAlert("Light Mode Enabled !", "success");
+      document.title = "TextUtils - LightMode  Enabled";
       toast.success('Light Mode Enabled', {
         position: "bottom-center"
       })
@@ -58,22 +72,22 @@ function App() {
   }
   return (
     <>
-    <Router>
-    <Navbar title="TextUtils" mode={mode} EnableDarkMode={toggleMode}/>
-    <Alert alert={alert}/>
-    <div className='container my-3 '>
-    <Routes>
-          <Route exact path="/about" element={<About mode={mode}/>}>
-          </Route>
-          <Route exact path="/" element={<Textform showAlert={showAlert} heading="Try TextUtils  WordCounter | CharacterCounter | RemoveExtraSpaces." mode={mode}/>}> 
-          </Route>
-          <Route exact path="/services" element={<Services mode={mode}/>}> 
-          </Route>
-          <Route exact path="/contact" element={<Contact mode={mode}/>}> 
-          </Route>
-    </Routes>
-    </div>
-    </Router>
+      <Router>
+        <Navbar title="TextUtils" mode={mode} EnableDarkMode={toggleMode} />
+        <Alert alert={alert} onClose={handleAlertClose} />
+        <div className='container my-3 '>
+          <Routes>
+            <Route exact path="/about" element={<About mode={mode} />}>
+            </Route>
+            <Route exact path="/" element={<Textform showAlert={showAlert} heading="Try TextUtils  WordCounter | CharacterCounter | RemoveExtraSpaces." mode={mode} />}>
+            </Route>
+            <Route exact path="/services" element={<Services mode={mode} />}>
+            </Route>
+            <Route exact path="/contact" element={<Contact mode={mode} />}>
+            </Route>
+          </Routes>
+        </div>
+      </Router>
     </>
   );
 }
