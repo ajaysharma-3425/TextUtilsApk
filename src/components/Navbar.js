@@ -2,53 +2,39 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar(props) {
+  // Text color based on mode
+  const brandColor = props.mode === "light" ? "#1a202c" : "#f7fafc";
+
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode} sticky-top`}
       style={{
-        boxShadow: props.mode === "light" 
-          ? "0 4px 12px rgba(0,0,0,0.08)" 
-          : "0 4px 12px rgba(0,0,0,0.2)",
+        boxShadow:
+          props.mode === "light"
+            ? "0 4px 12px rgba(0,0,0,0.08)"
+            : "0 4px 12px rgba(0,0,0,0.2)",
         transition: "all 0.3s ease-in-out",
-        padding: "0.8rem 0"
+        padding: "0.8rem 0",
       }}
     >
       <div className="container">
-        {/* Brand/Logo with modern design */}
-        <NavLink 
-          className="navbar-brand d-flex align-items-center fw-bold" 
+        {/* Brand/Logo - Simple text only */}
+        <NavLink
+          className="navbar-brand d-flex align-items-center fw-bold"
           to="/"
           style={{
             fontSize: "1.6rem",
             letterSpacing: "1px",
-            fontWeight: "700"
+            fontWeight: "700",
+            color: brandColor,
+            textDecoration: "none",
+            transition: "color 0.3s ease",
           }}
         >
-          <div 
-            className="me-2 d-flex align-items-center justify-content-center"
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "10px",
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              color: "white",
-              fontSize: "1.2rem"
-            }}
-          >
-            {props.title.charAt(0)}
-          </div>
-          <span className="gradient-text" style={{
-            background: props.mode === "light" 
-              ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
-              : "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent"
-          }}>
-            {props.title}
-          </span>
+          {props.title}
         </NavLink>
 
-        {/* Mobile Toggle Button with animation */}
+        {/* Mobile Toggle Button */}
         <button
           className="navbar-toggler border-0"
           type="button"
@@ -60,135 +46,208 @@ export default function Navbar(props) {
           style={{
             padding: "0.5rem",
             boxShadow: "none",
-            outline: "none"
+            outline: "none",
           }}
         >
-          <span 
+          <span
             className="navbar-toggler-icon"
             style={{
-              backgroundImage: props.mode === "light" 
-                ? `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`
-                : `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`
+              backgroundImage:
+                props.mode === "light"
+                  ? `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`
+                  : `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")`,
             }}
-          ></span>
+          />
         </button>
 
         {/* Navbar Content */}
         <div className="collapse navbar-collapse" id="navbarContent">
-          {/* Navigation Links with modern hover effect */}
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item position-relative mx-2">
-              <NavLink 
-                className={({ isActive }) => 
-                  `nav-link px-3 py-2 ${isActive ? 'active fw-semibold' : ''}`
-                }
-                aria-current="page" 
+              <NavLink
                 to="/"
+                className={({ isActive }) =>
+                  `nav-link px-3 py-2 ${isActive ? "active fw-semibold" : ""}`
+                }
                 style={{
                   transition: "all 0.3s ease",
                   fontWeight: "500",
-                  borderRadius: "8px"
+                  borderRadius: "8px",
                 }}
               >
-                <i className="bi bi-house-door me-2"></i>
-                Home
-                {({ isActive }) => isActive && (
-                  <span className="active-indicator" style={{
-                    position: "absolute",
-                    bottom: "-5px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "5px",
-                    height: "5px",
-                    borderRadius: "50%",
-                    backgroundColor: props.mode === "light" ? "#667eea" : "#4facfe"
-                  }}></span>
+                {({ isActive }) => (
+                  <>
+                    <i className="bi bi-house-door me-2" />
+                    Home
+                    {isActive && (
+                      <span
+                        className="active-indicator"
+                        style={{
+                          position: "absolute",
+                          bottom: "-5px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          backgroundColor:
+                            props.mode === "light" ? "#667eea" : "#4facfe",
+                        }}
+                      />
+                    )}
+                  </>
                 )}
               </NavLink>
             </li>
             <li className="nav-item position-relative mx-2">
-              <NavLink 
-                className={({ isActive }) => 
-                  `nav-link px-3 py-2 ${isActive ? 'active fw-semibold' : ''}`
-                }
+              <NavLink
                 to="/about"
+                className={({ isActive }) =>
+                  `nav-link px-3 py-2 ${isActive ? "active fw-semibold" : ""}`
+                }
                 style={{
                   transition: "all 0.3s ease",
                   fontWeight: "500",
-                  borderRadius: "8px"
+                  borderRadius: "8px",
                 }}
               >
-                <i className="bi bi-info-circle me-2"></i>
-                About
+                {({ isActive }) => (
+                  <>
+                    <i className="bi bi-info-circle me-2" />
+                    About
+                    {isActive && (
+                      <span
+                        className="active-indicator"
+                        style={{
+                          position: "absolute",
+                          bottom: "-5px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          backgroundColor:
+                            props.mode === "light" ? "#667eea" : "#4facfe",
+                        }}
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             </li>
             <li className="nav-item position-relative mx-2">
-              <NavLink 
-                className={({ isActive }) => 
-                  `nav-link px-3 py-2 ${isActive ? 'active fw-semibold' : ''}`
-                }
+              <NavLink
                 to="/services"
+                className={({ isActive }) =>
+                  `nav-link px-3 py-2 ${isActive ? "active fw-semibold" : ""}`
+                }
                 style={{
                   transition: "all 0.3s ease",
                   fontWeight: "500",
-                  borderRadius: "8px"
+                  borderRadius: "8px",
                 }}
               >
-                <i className="bi bi-briefcase me-2"></i>
-                Services
+                {({ isActive }) => (
+                  <>
+                    <i className="bi bi-briefcase me-2" />
+                    Services
+                    {isActive && (
+                      <span
+                        className="active-indicator"
+                        style={{
+                          position: "absolute",
+                          bottom: "-5px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          backgroundColor:
+                            props.mode === "light" ? "#667eea" : "#4facfe",
+                        }}
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             </li>
             <li className="nav-item position-relative mx-2">
-              <NavLink 
-                className={({ isActive }) => 
-                  `nav-link px-3 py-2 ${isActive ? 'active fw-semibold' : ''}`
-                }
+              <NavLink
                 to="/contact"
+                className={({ isActive }) =>
+                  `nav-link px-3 py-2 ${isActive ? "active fw-semibold" : ""}`
+                }
                 style={{
                   transition: "all 0.3s ease",
                   fontWeight: "500",
-                  borderRadius: "8px"
+                  borderRadius: "8px",
                 }}
               >
-                <i className="bi bi-envelope me-2"></i>
-                Contact
+                {({ isActive }) => (
+                  <>
+                    <i className="bi bi-envelope me-2" />
+                    Contact
+                    {isActive && (
+                      <span
+                        className="active-indicator"
+                        style={{
+                          position: "absolute",
+                          bottom: "-5px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          backgroundColor:
+                            props.mode === "light" ? "#667eea" : "#4facfe",
+                        }}
+                      />
+                    )}
+                  </>
+                )}
               </NavLink>
             </li>
           </ul>
 
-          {/* Dark/Light Mode Toggle - Modern Design */}
+          {/* Dark/Light Mode Toggle */}
           <div className="d-flex align-items-center gap-3">
-            <div 
+            <div
               className="mode-toggle-container p-2 rounded-3"
               style={{
-                background: props.mode === "light" 
-                  ? "linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%)" 
-                  : "linear-gradient(135deg, #2d3748 0%, #4a5568 100%)",
-                border: props.mode === "light" 
-                  ? "1px solid #e2e8f0" 
-                  : "1px solid #4a5568"
+                background:
+                  props.mode === "light"
+                    ? "linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%)"
+                    : "linear-gradient(135deg, #2d3748 0%, #4a5568 100%)",
+                border:
+                  props.mode === "light"
+                    ? "1px solid #e2e8f0"
+                    : "1px solid #4a5568",
               }}
             >
               <div className="d-flex align-items-center justify-content-between">
                 {/* Sun Icon */}
-                <div 
+                <div
                   className="d-flex align-items-center justify-content-center me-3"
                   style={{
                     width: "32px",
                     height: "32px",
                     borderRadius: "50%",
-                    background: props.mode === "light" 
-                      ? "linear-gradient(135deg, #f6d365 0%, #fda085 100%)" 
-                      : "transparent",
-                    transition: "all 0.3s ease"
+                    background:
+                      props.mode === "light"
+                        ? "linear-gradient(135deg, #f6d365 0%, #fda085 100%)"
+                        : "transparent",
+                    transition: "all 0.3s ease",
                   }}
                 >
-                  <i className="bi bi-sun-fill" style={{
-                    color: props.mode === "light" ? "#fff" : "#a0aec0",
-                    fontSize: "1rem"
-                  }}></i>
+                  <i
+                    className="bi bi-sun-fill"
+                    style={{
+                      color: props.mode === "light" ? "#fff" : "#a0aec0",
+                      fontSize: "1rem",
+                    }}
+                  />
                 </div>
-                
+
                 {/* Toggle Switch */}
                 <div className="position-relative">
                   <input
@@ -202,55 +261,64 @@ export default function Navbar(props) {
                       width: "60px",
                       height: "30px",
                       cursor: "pointer",
-                      backgroundColor: props.mode === "dark" ? "#4a5568" : "#e2e8f0",
-                      borderColor: props.mode === "dark" ? "#4a5568" : "#cbd5e0",
-                      position: "relative"
+                      backgroundColor:
+                        props.mode === "dark" ? "#4a5568" : "#e2e8f0",
+                      borderColor:
+                        props.mode === "dark" ? "#4a5568" : "#cbd5e0",
+                      position: "relative",
                     }}
                   />
-                  {/* Custom slider */}
-                  <div 
+                  <div
                     className="position-absolute"
                     style={{
                       top: "50%",
-                      left: props.mode === "dark" ? "calc(100% - 26px)" : "4px",
                       transform: "translateY(-50%)",
+                      left: props.mode === "dark" ? "calc(100% - 26px)" : "4px",
                       width: "22px",
                       height: "22px",
                       borderRadius: "50%",
-                      background: props.mode === "dark" 
-                        ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" 
-                        : "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
-                      transition: "all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-                      pointerEvents: "none"
+                      background:
+                        props.mode === "dark"
+                          ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+                          : "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+                      transition:
+                        "all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+                      pointerEvents: "none",
                     }}
-                  ></div>
+                  />
                 </div>
-                
+
                 {/* Moon Icon */}
-                <div 
+                <div
                   className="d-flex align-items-center justify-content-center ms-3"
                   style={{
                     width: "32px",
                     height: "32px",
                     borderRadius: "50%",
-                    background: props.mode === "dark" 
-                      ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" 
-                      : "transparent",
-                    transition: "all 0.3s ease"
+                    background:
+                      props.mode === "dark"
+                        ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+                        : "transparent",
+                    transition: "all 0.3s ease",
                   }}
                 >
-                  <i className="bi bi-moon-fill" style={{
-                    color: props.mode === "dark" ? "#fff" : "#a0aec0",
-                    fontSize: "1rem"
-                  }}></i>
+                  <i
+                    className="bi bi-moon-fill"
+                    style={{
+                      color: props.mode === "dark" ? "#fff" : "#a0aec0",
+                      fontSize: "1rem",
+                    }}
+                  />
                 </div>
               </div>
-              
-              {/* Mode Label */}
+
               <div className="text-center mt-2">
-                <small className="fw-medium" style={{
-                  color: props.mode === "light" ? "#4a5568" : "#cbd5e0"
-                }}>
+                <small
+                  className="fw-medium"
+                  style={{
+                    color: props.mode === "light" ? "#4a5568" : "#cbd5e0",
+                  }}
+                >
                   {props.mode === "light" ? "Light Mode" : "Dark Mode"}
                 </small>
               </div>
